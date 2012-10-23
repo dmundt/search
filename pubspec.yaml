@@ -1,0 +1,5 @@
+name:  comments
+description:  A sample application
+
+dependencies:
+  args: { sdk: args }
