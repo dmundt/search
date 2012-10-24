@@ -4,5 +4,4 @@ description:  A regular expression based command line search tool.
 dependencies:
   args:
     sdk: args
-  sprintf:
-    git: git://github.com/Naddiseo/dart-sprintf.git
+  sprintf: any
