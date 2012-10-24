@@ -1,5 +1,5 @@
-name:  comments
-description:  A sample application
+name:  search
+description:  A regular expression based command line search tool. 
 
 dependencies:
   args: { sdk: args }
