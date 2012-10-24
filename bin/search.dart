@@ -16,15 +16,15 @@ const _PARSE_COMMENT_REGEX = const RegExp(r'\w*\s*//\s*[a-z]+');
 Future<List<String>> _filterLine(lines) {
   var completer = new Completer<List<String>>();
   var number = 0;
-  var comments = <String>[];
+  var result = <String>[];
   var line;
   while ((line = lines.readLine()) != null) {
     ++number;
     if (line.contains(_PARSE_COMMENT_REGEX)) {
-      comments.add("${number}: $line");
+      result.add("${number}: $line");
     }
   }
-  completer.complete(comments);
+  completer.complete(result);
   return completer.future;
 }
 
@@ -72,15 +72,12 @@ ArgParser get _pubArgParser {
 }
 
 void main() {
-  // Define options.
   var globalOptions;
   try {
     globalOptions = _pubArgParser.parse(new Options().arguments);
   } on FormatException catch (e) {
     return;
   }
-
-  // Parse options.
   if (globalOptions['path'] != null) {
     _processFiles(globalOptions['path']);
     return;
