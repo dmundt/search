@@ -2,12 +2,10 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-// --path "d:/p4/omega/Baugruppen/VPU3400/Software/branches/unified-refactoring/apps/rtools/"
-// --path "d:/test/"
-
 // File patterns:
 // \.h|\.cpp$
 // ^(?!.*m16flash).*(\.h|\.cpp)
+// ^(?!.*packages).*\.dart$
 
 // Line patterns:
 // //\s*[a-z]+
@@ -16,15 +14,16 @@
 // strncpy\(.*?,.*?,\s*sizeof\(
 // strncpy\(.*?,.*?,\s*strlen\(
 // malloc\(\s*strlen\(
-// \$Id
+// \$Id:
 // if \(\w*\s*!=\s*\w*\)
 // (.*)\s*0u
 // \d+u
 
 library search;
 
-import 'package:args/args.dart';
 import 'dart:io';
+import 'package:args/args.dart';
+import 'package:sprintf/sprintf.dart';
 
 Future<List<String>> _filterLine(lines, pattern) {
   var completer = new Completer<List<String>>();
@@ -34,7 +33,7 @@ Future<List<String>> _filterLine(lines, pattern) {
   while ((line = lines.readLine()) != null) {
     ++number;
     if (line.contains(pattern)) {
-      result.add("${number}: $line");
+      result.add("${sprintf("%4d", [number.toInt()])}: $line");
     }
   }
   completer.complete(result);
@@ -66,7 +65,7 @@ void _processFile(name, file, pattern) {
   }
 }
 
-void _processFiles(String rootDir, RegExp file, RegExp pattern) {
+void _processFiles(rootDir, file, pattern) {
   var path = new Path.fromNative(rootDir);
   var dir = new Directory.fromPath(path.directoryPath);
   var lister = dir.list(recursive:true);

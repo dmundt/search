@@ -1,5 +1,8 @@
 name:  search
-description:  A regular expression based command line search tool. 
+description:  A regular expression based command line search tool.
 
 dependencies:
-  args: { sdk: args }
+  args:
+    sdk: args
+  sprintf:
+    git: git://github.com/Naddiseo/dart-sprintf.git
