@@ -14,6 +14,8 @@ final _PARSE_FILE_REGEX = const RegExp(r'(\.h|\.cpp)$');
 final _PARSE_COMMENT_REGEX = const RegExp(r'\w*\s*//\s*[a-z]+');
 
 Future<List> _filterLine(lines) {
+  var completer = new Completer<List>();
+
   var number = 0;
   var comments = [];
   var line;
@@ -21,11 +23,9 @@ Future<List> _filterLine(lines) {
   while ((line = lines.readLine()) != null) {
     number++;
     if (line.contains(_PARSE_COMMENT_REGEX)) {
-      comments.add("${++number}: $line");
+      comments.add("${number}: $line");
     }
   }
-
-  var completer = new Completer();
   completer.complete(comments);
   return completer.future;
 }
