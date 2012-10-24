@@ -13,15 +13,6 @@ import 'dart:io';
 final _PARSE_FILE_REGEX = const RegExp(r'(\.h|\.cpp)$');
 final _PARSE_COMMENT_REGEX = const RegExp(r'\w*\s*//\s*[a-z]+');
 
-ArgParser get _pubArgParser {
-  var parser = new ArgParser();
-  parser.addFlag('help', abbr: 'h', negatable: false,
-    help: 'Prints this usage information');
-  parser.addOption('path', abbr: 'p',
-    help: 'Sets the current path to parse for invalid comments');
-  return parser;
-}
-
 Future<List> _filterLine(lines) {
   var number = 0;
   var comments = [];
@@ -71,6 +62,15 @@ void _processFiles(String rootDir) {
   lister.onFile = (name) {
     _processFile(name);
   };
+}
+
+ArgParser get _pubArgParser {
+  var parser = new ArgParser();
+  parser.addFlag('help', abbr: 'h', negatable: false,
+    help: 'Prints this usage information');
+  parser.addOption('path', abbr: 'p',
+    help: 'Sets the current path to parse for invalid comments');
+  return parser;
 }
 
 void main() {
