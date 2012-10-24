@@ -10,18 +10,16 @@ library comments;
 import 'package:args/args.dart';
 import 'dart:io';
 
-final _PARSE_FILE_REGEX = const RegExp(r'(\.h|\.cpp)$');
-final _PARSE_COMMENT_REGEX = const RegExp(r'\w*\s*//\s*[a-z]+');
+const _PARSE_FILE_REGEX = const RegExp(r'(\.h|\.cpp)$');
+const _PARSE_COMMENT_REGEX = const RegExp(r'\w*\s*//\s*[a-z]+');
 
-Future<List> _filterLine(lines) {
-  var completer = new Completer<List>();
-
+Future<List<String>> _filterLine(lines) {
+  var completer = new Completer<List<String>>();
   var number = 0;
-  var comments = [];
+  var comments = <String>[];
   var line;
-
   while ((line = lines.readLine()) != null) {
-    number++;
+    ++number;
     if (line.contains(_PARSE_COMMENT_REGEX)) {
       comments.add("${number}: $line");
     }
