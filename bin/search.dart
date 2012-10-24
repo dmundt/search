@@ -5,10 +5,23 @@
 // --path "d:/p4/omega/Baugruppen/VPU3400/Software/branches/unified-refactoring/apps/rtools/"
 // --path "d:/test/"
 
-//const _PARSE_FILE_REGEX = const RegExp(r'(\.h|\.cpp)$');
-//const _PARSE_COMMENT_REGEX = const RegExp(r'\w*\s*//\s*[a-z]+');
+// File patterns:
+// \.h|\.cpp$
+// ^(?!.*m16flash).*(\.h|\.cpp)
 
-library comments;
+// Line patterns:
+// //\s*[a-z]+
+// \[sizeof\(.*\)\]\ *=\ *'?\\?0'?;$
+// strncpy\(.*?,.*?,\s*sizeof\(
+// strncpy\(.*?,.*?,\s*sizeof\(
+// strncpy\(.*?,.*?,\s*strlen\(
+// malloc\(\s*strlen\(
+// \$Id
+// if \(\w*\s*!=\s*\w*\)
+// (.*)\s*0u
+// \d+u
+
+library search;
 
 import 'package:args/args.dart';
 import 'dart:io';
