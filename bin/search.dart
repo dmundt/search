@@ -27,25 +27,25 @@ import 'package:sprintf/sprintf.dart';
 
 Future<List<String>> _filterLine(lines, pattern) {
   var completer = new Completer<List<String>>();
-  var number = 0;
+  var number = 1;
   var result = <String>[];
   var line;
   while ((line = lines.readLine()) != null) {
-    ++number;
     if (line.contains(pattern)) {
       result.add("${sprintf("%4d", [number.toInt()])}: $line");
     }
+    number++;
   }
   completer.complete(result);
   return completer.future;
 }
 
 void _proccesLines(name, lines, pattern) {
-  _filterLine(lines, pattern).then((comments) {
-    if (comments.length > 0) {
-      print("File: $name");
-      for (final x in comments) {
-        print(x);
+  _filterLine(lines, pattern).then((lines) {
+    if (lines.length > 0) {
+      print("File: $name (${lines.length} occurence(s))");
+      for (final line in lines) {
+        print(line);
       }
       print("");
     }
