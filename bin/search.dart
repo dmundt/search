@@ -40,10 +40,13 @@ Future<List<String>> _filterLine(lines, pattern) {
   return completer.future;
 }
 
+String _formatMatches(count) =>
+    "$count ${(count == 1) ? 'match' : 'matches'}";
+
 void _proccesLines(name, lines, pattern) {
   _filterLine(lines, pattern).then((lines) {
     if (lines.length > 0) {
-      print("File: $name (${lines.length} occurence(s))");
+      print("File: $name (${_formatMatches(lines.length)})");
       for (final line in lines) {
         print(line);
       }
@@ -110,4 +113,10 @@ void main() {
   } else {
     print('Missing path argument.');
   }
+
+//  var stopwatch = new Stopwatch();
+//  stopwatch.start(); //Start timer.
+//  benchmarkCode();
+//  stopwatch.stop(); // Stop timer.
+//  var elapsed = stopwatch.elapsedMicroseconds; // Get the microseconds.
 }
