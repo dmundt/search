@@ -113,10 +113,4 @@ void main() {
   } else {
     print('Missing path argument.');
   }
-
-//  var stopwatch = new Stopwatch();
-//  stopwatch.start(); //Start timer.
-//  benchmarkCode();
-//  stopwatch.stop(); // Stop timer.
-//  var elapsed = stopwatch.elapsedMicroseconds; // Get the microseconds.
 }
