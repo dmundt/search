@@ -18,6 +18,10 @@
 // if \(\w*\s*!=\s*\w*\)
 // (.*)\s*0u
 // \d+u
+// \*this
+// OS->(?:Log)?Err\(
+// OS->(?:Log)?Err\(.*?\"\);
+// OS->(?:Log)?Err\(.*?[^\!]+\"\);
 
 library search;
 
