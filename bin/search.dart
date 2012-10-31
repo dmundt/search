@@ -2,27 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-// File patterns:
-// \.h|\.cpp$
-// ^(?!.*m16flash).*(\.h|\.cpp)
-// ^(?!.*packages).*\.dart$
-
-// Line patterns:
-// //\s*[a-z]+
-// \[sizeof\(.*\)\]\ *=\ *'?\\?0'?;$
-// strncpy\(.*?,.*?,\s*sizeof\(
-// strncpy\(.*?,.*?,\s*sizeof\(
-// strncpy\(.*?,.*?,\s*strlen\(
-// malloc\(\s*strlen\(
-// \$Id:
-// if \(\w*\s*!=\s*\w*\)
-// (.*)\s*0u
-// \d+u
-// \*this
-// OS->(?:Log)?Err\(
-// OS->(?:Log)?Err\(.*?\"\);
-// OS->(?:Log)?Err\(.*?[^\!]+\"\);
-
 library search;
 
 import 'dart:io';
@@ -31,7 +10,7 @@ import 'package:args/args.dart';
 final _LINE_NUMBER_INTENDATION = 4;
 final _SPACE_CHAR = ' ';
 
-String _pad(num number, num maxDigits) {
+String _pad(number, maxDigits) {
   var digits = number.toString().replaceAll('.', '').length;
   var leading = '';
   for (int i = 0; i < (maxDigits - digits); i++) {

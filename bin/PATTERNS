@@ -1,0 +1,21 @@
+// File patterns:
+// \.h|\.cpp$
+// ^(?!.*m16flash).*(\.h|\.cpp)
+// ^(?!.*packages).*\.dart$
+
+// Line patterns:
+// //\s*[a-z]+
+// \[sizeof\(.*\)\]\ *=\ *'?\\?0'?;$
+// strncpy\(.*?,.*?,\s*sizeof\(
+// strncpy\(.*?,.*?,\s*sizeof\(
+// strncpy\(.*?,.*?,\s*strlen\(
+// malloc\(\s*strlen\(
+// \$Id:
+// if \(\w*\s*!=\s*\w*\)
+// (.*)\s*0u
+// \d+u
+// \*this
+// OS->(?:Log)?Err\(
+// OS->(?:Log)?Err\(.*?\"\);
+// OS->(?:Log)?Err\(.*?[^\!]+\"\);
+// \= sync\(" --file
