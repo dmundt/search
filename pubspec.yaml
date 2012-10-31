@@ -4,4 +4,3 @@ description:  A regular expression based command line search tool.
 dependencies:
   args:
     sdk: args
-  sprintf: any
