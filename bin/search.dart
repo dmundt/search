@@ -27,7 +27,18 @@ library search;
 
 import 'dart:io';
 import 'package:args/args.dart';
-import 'package:sprintf/sprintf.dart';
+
+final _LINE_NUMBER_INTENDATION = 4;
+final _SPACE_CHAR = ' ';
+
+String _pad(num number, num maxDigits) {
+  var digits = number.toString().replaceAll('.', '').length;
+  var leading = '';
+  for (int i = 0; i < (maxDigits - digits); i++) {
+    leading = '$_SPACE_CHAR$leading';
+  }
+  return '$leading${number.toString()}';
+}
 
 Future<List<String>> _filterLine(lines, pattern) {
   var completer = new Completer<List<String>>();
@@ -36,7 +47,7 @@ Future<List<String>> _filterLine(lines, pattern) {
   var line;
   while ((line = lines.readLine()) != null) {
     if (line.contains(pattern)) {
-      result.add("${sprintf("%4d", [number.toInt()])}: $line");
+      result.add("${_pad(number, _LINE_NUMBER_INTENDATION)}: $line");
     }
     number++;
   }
