@@ -1,52 +1,69 @@
 
-abstract class Item {
-  String name;
-  List<Item> items;
+import 'package:meta/meta.dart';
 
-  Item._internal(this.name);
-  void accept(ItemVisitor visitor);
-  String toString();
+abstract class Item extends Comparable {
+  num name;
+  List<Item> items = <Item>[];
+
+  Item._(this.name);
+  void accept(ItemVisitor visitor) {
+    if (visitor.strategy == Strategy.TOP_DOWN) {
+      for (var item in items) {
+        item.accept(visitor);
+      }
+    }
+    visitor.visit(this);
+    if (visitor.strategy == Strategy.BOTTOM_UP) {
+      for (var item in items) {
+        item.accept(visitor);
+      }
+    }
+  }
+
+  void sort() => items.sort();
+  @override int compareTo(Item other) => name.compareTo(other.name);
+  @override String toString() => name.toString();
 }
 
 class LineItem extends Item {
-  LineItem(String name) : super._internal(name) {
-    items = [];
-  }
-  void accept(ItemVisitor visitor) {
+  LineItem(num name) : super._(name);
+  @override void accept(ItemVisitor visitor) {
     visitor.visit(this);
   }
-  String toString() => name;
 }
 
 class FileItem extends Item {
-  FileItem(String name) : super._internal(name) {
-    items = [];
-  }
-  void accept(ItemVisitor visitor) {
-    for (var item in items) {
-      item.accept(visitor);
-    }
-    visitor.visit(this);
-  }
+  FileItem(num name) : super._(name);
 }
 
 class JobItem extends Item {
-  JobItem(String name) : super._internal(name) {
-    items = [];
-  }
-  void accept(ItemVisitor visitor) {
-    for (var item in items) {
-      item.accept(visitor);
-    }
-    visitor.visit(this);
-  }
+  JobItem(num name) : super._(name);
+}
+
+class Strategy {
+  static const TOP_DOWN = const Strategy._("TOP_DOWN");
+  static const BOTTOM_UP = const Strategy._("BOTTOM_UP");
+
+  final String strategy;
+  const Strategy._(this.strategy);
+  @override String toString() => strategy;
 }
 
 abstract class ItemVisitor {
+  final Strategy strategy;
+  ItemVisitor._(this.strategy);
   void visit(Item item);
 }
 
-class ItemRenderVisitor extends ItemVisitor {
+class ItemSortVisitor extends ItemVisitor {
+  ItemSortVisitor() : super._(Strategy.TOP_DOWN);
+  void visit(Item item) {
+    item.sort();
+  }
+}
+
+class ItemPrintVisitor extends ItemVisitor {
+  ItemPrintVisitor() : super._(Strategy.BOTTOM_UP);
   void visit(Item item) {
     if (item is LineItem) {
       print('LINE: ${item.toString()}');
@@ -58,28 +75,19 @@ class ItemRenderVisitor extends ItemVisitor {
   }
 }
 
-class ItemCountVisitor extends ItemVisitor {
-  var lines = 0;
-
-  void visit(Item item) {
-    if (item is FileItem) {
-      print('FILE: ${item.name} (${item.items.length})');
-      lines += item.items.length;
-    } else if (item is JobItem) {
-      print('JOB : ${item.name} (${item.items.length}/$lines)');
-    }
-  }
-}
-
 main() {
-  var job = new JobItem('job1');
-  for (var fileName in ['file1', 'file2', 'file3']) {
+  var job = new JobItem(1);
+  // Build item tree structure.
+  for (var fileName in [2, 1]) {
     var file = new FileItem(fileName);
-    for (var line in [' 1', '2', '45', '60', '71']) {
+    for (var line in [2, 1, 0]) {
       file.items.add(new LineItem(line));
     }
     job.items.add(file);
   }
-//  job.accept(new ItemRenderVisitor());
-  job.accept(new ItemCountVisitor());
+  // Execute visitors.
+  job.accept(new ItemPrintVisitor());
+  job.accept(new ItemSortVisitor());
+  print('');
+  job.accept(new ItemPrintVisitor());
 }
