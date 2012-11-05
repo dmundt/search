@@ -4,3 +4,5 @@ description:  A regular expression based command line search tool.
 dependencies:
   args:
     sdk: args
+  meta:
+    sdk: meta
