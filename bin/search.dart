@@ -7,14 +7,14 @@ library search;
 import 'dart:io';
 import 'package:args/args.dart';
 
-final _LINE_NUMBER_INTENDATION = 4;
-final _SPACE_CHAR = ' ';
+final _INDEND = 4;
+final _SPACE = ' ';
 
 String _pad(number, maxDigits) {
   var digits = number.toString().replaceAll('.', '').length;
   var leading = '';
   for (int i = 0; i < (maxDigits - digits); i++) {
-    leading = '$_SPACE_CHAR$leading';
+    leading = '$_SPACE$leading';
   }
   return '$leading${number.toString()}';
 }
@@ -26,7 +26,7 @@ Future<List<String>> _filterLine(lines, pattern) {
   var line;
   while ((line = lines.readLine()) != null) {
     if (line.contains(pattern)) {
-      result.add("${_pad(number, _LINE_NUMBER_INTENDATION)}: $line");
+      result.add("${_pad(number, _INDEND)}: $line");
     }
     number++;
   }
@@ -64,8 +64,8 @@ void _processFile(name, file, pattern) {
 
 void _processFiles(rootDir, file, pattern) {
   var path = new Path.fromNative(rootDir);
-  var dir = new Directory.fromPath(path.directoryPath);
-  var lister = dir.list(recursive:true);
+  var dir = new Directory.fromPath(path);
+  var lister = dir.list(recursive: true);
   lister.onFile = (name) {
     _processFile(name, file, pattern);
   };
